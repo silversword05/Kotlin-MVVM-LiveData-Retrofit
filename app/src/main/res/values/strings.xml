@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">News-Retro</string>
+    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="title_food">Tesla</string>
+    <string name="title_drinks">Microsoft</string>
+    <string name="item_image">Item Image</string>
+    <string name="news_image">News Image</string>
+</resources>
