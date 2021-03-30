@@ -49,4 +49,4 @@ Step-4: Run the application.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/shantudas/Android-Architecture-Components-MVVM-Retrofit-JAVA/blob/master/LICENSE) file for details
+This project is licensed under the MIT License
