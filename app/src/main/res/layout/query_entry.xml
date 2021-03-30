@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <EditText
+            android:id="@+id/query_search_entry_point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textSize="20sp"
+            android:layout_toStartOf="@+id/query_search_remove_button"
+            android:hint="@string/query_to_search"/>
+
+    <Button
+            android:id="@+id/query_search_remove_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remove"
+            android:textAllCaps="true"
+            android:textStyle="bold|italic"
+            android:textSize="15sp"
+            android:textColor="@color/colorAccent"
+            android:background="#80FFFFFF"
+            android:padding="5sp"
+            android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

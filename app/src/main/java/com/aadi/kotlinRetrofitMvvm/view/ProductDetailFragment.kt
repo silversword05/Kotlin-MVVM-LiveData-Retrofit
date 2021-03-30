@@ -54,7 +54,7 @@ class ProductDetailFragment : Fragment() {
             var productDetailAdapter: ProductDetailAdapter? = null
 
             productListModel.getProducts(query)
-            productListModel.listOfProducts?.observe(viewLifecycleOwner, Observer(function = fun(newsResponse: NewsResponse?) {
+            productListModel.getLiveProductList().observe(viewLifecycleOwner, Observer(function = fun(newsResponse: NewsResponse?) {
                 newsResponse?.let {
 
                     productDetailAdapter?.setNewsResponse(newsResponse) ?: run {

@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">News-Retro</string>
     <string name="title_activity_tabbed">TabbedActivity</string>
-    <string name="title_food">Tesla</string>
-    <string name="title_drinks">Microsoft</string>
+    <string name="query_group1">Query Group 1</string>
+    <string name="query_group2">Query Group 2</string>
     <string name="item_image">Item Image</string>
     <string name="news_image">News Image</string>
+    <string name="add_new_query">Add new query</string>
+    <string name="query_to_search">Query to search</string>
+    <string name="remove">Remove</string>
+    <string name="search_both_queries">Search Both Queries</string>
 </resources>

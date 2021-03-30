@@ -3,7 +3,7 @@ package com.aadi.kotlinRetrofitMvvm.repository
 import android.util.Log
 import com.aadi.kotlinRetrofitMvvm.NetWorkApi
 import com.aadi.kotlinRetrofitMvvm.model.NewsResponse
-import com.aadi.kotlinRetrofitMvvm.view.MainActivity.Companion.API_KEY
+import com.aadi.kotlinRetrofitMvvm.view.TabbedActivity.Companion.API_KEY
 import retrofit2.Call
 import retrofit2.Response
 

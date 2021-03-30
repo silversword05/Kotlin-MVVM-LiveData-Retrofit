@@ -8,12 +8,12 @@
     <fragment
             android:id="@+id/navigation_food"
             android:name="com.aadi.kotlinRetrofitMvvm.view.ProductDetailFragment"
-            android:label="@string/title_food"
+            android:label="@string/query_group1"
             tools:layout="@layout/fragment_products" />
 
     <fragment
             android:id="@+id/navigation_drinks"
             android:name="com.aadi.kotlinRetrofitMvvm.view.ProductDetailFragment"
-            android:label="@string/title_drinks"
+            android:label="@string/query_group2"
             tools:layout="@layout/fragment_products" />
 </navigation>

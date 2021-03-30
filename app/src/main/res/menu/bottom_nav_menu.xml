@@ -4,11 +4,11 @@
     <item
             android:id="@+id/navigation_food"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/title_food" />
+            android:title="@string/query_group1" />
 
     <item
             android:id="@+id/navigation_drinks"
             android:icon="@drawable/ic_dashboard_black_24dp"
-            android:title="@string/title_drinks" />
+            android:title="@string/query_group2" />
 
 </menu>

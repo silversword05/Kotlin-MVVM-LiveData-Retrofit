@@ -3,6 +3,7 @@ package com.aadi.kotlinRetrofitMvvm.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.aadi.kotlinRetrofitMvvm.model.NewsResponse
 import com.aadi.kotlinRetrofitMvvm.repository.DataRepository
 import org.koin.standalone.KoinComponent
@@ -10,7 +11,7 @@ import org.koin.standalone.KoinComponent
 
 class ProductViewModel(private val dataRepository: DataRepository) : ViewModel(), KoinComponent {
 
-    var listOfProducts: MutableLiveData<NewsResponse>? = MutableLiveData<NewsResponse>()
+    private var listOfProducts: MutableLiveData<NewsResponse?>? = MutableLiveData()
 
     init {
         listOfProducts?.value = null
@@ -30,4 +31,6 @@ class ProductViewModel(private val dataRepository: DataRepository) : ViewModel()
             }
         }, query)
     }
+
+    fun getLiveProductList(): LiveData<NewsResponse?> = listOfProducts!!
 }
