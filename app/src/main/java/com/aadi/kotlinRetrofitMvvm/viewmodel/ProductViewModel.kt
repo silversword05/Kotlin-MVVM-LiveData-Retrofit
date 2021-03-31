@@ -23,7 +23,8 @@ class ProductViewModel(private val dataRepository: DataRepository) : ViewModel()
         dataRepository.getProducts(object : DataRepository.OnProductData {
             override fun onSuccess(data: NewsResponse) {
                 listOfProducts?.value = data
-                Log.v(ProductViewModel::class.qualifiedName, "Success product in ProductViewModel with query $query, list ipdated")
+                Log.v(ProductViewModel::class.qualifiedName, "Number of products ${data.totalResults}")
+                Log.v(ProductViewModel::class.qualifiedName, "Success product in ProductViewModel with query $query, list updated")
             }
 
             override fun onFailure() {

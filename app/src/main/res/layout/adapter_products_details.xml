@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@android:color/holo_blue_light">
+            android:background="@color/colorNewsContainer">
 
         <ImageView
                 android:id="@+id/imgViewCover"

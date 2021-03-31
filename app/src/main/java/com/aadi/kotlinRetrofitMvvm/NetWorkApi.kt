@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface NetWorkApi{
 
-    @GET("v2/top-headlines")
+    @GET("v2/everything")
     fun getProducts(@Query("q") query: String, @Query("apikey") apiKey: String): Call<NewsResponse>
 
 }

@@ -7,7 +7,7 @@ import com.aadi.kotlinRetrofitMvvm.view.TabbedActivity.Companion.API_KEY
 import retrofit2.Call
 import retrofit2.Response
 
-class DataRepository(val netWorkApi: NetWorkApi) {
+class DataRepository(private val netWorkApi: NetWorkApi) {
 
     fun getProducts(onProductData: OnProductData, query: String) {
         netWorkApi.getProducts(query, API_KEY)

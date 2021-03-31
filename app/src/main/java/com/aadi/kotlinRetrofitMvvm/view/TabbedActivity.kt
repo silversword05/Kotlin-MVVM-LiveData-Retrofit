@@ -1,6 +1,7 @@
 package com.aadi.kotlinRetrofitMvvm.view
 
 import android.os.Bundle
+import android.view.Menu
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
@@ -21,6 +22,9 @@ class TabbedActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tabbed)
         supportActionBar?.hide()
 
+        val query1: String = intent.getStringExtra(resources.getString(R.string.query_group1))
+        val query2: String = intent.getStringExtra(resources.getString(R.string.query_group2))
+
         API_KEY = getString(R.string.news_api_id)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
@@ -32,8 +36,12 @@ class TabbedActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        val menu: Menu = navView.menu
+        menu.findItem(R.id.navigation_food).title = query1.replace('+', ' ')
+        menu.findItem(R.id.navigation_drinks).title = query2.replace('+', ' ')
+
         savedInstanceState ?: run {
-            val newFragment = ProductDetailFragment.newInstance(resources.getString(R.string.query_group1))
+            val newFragment = ProductDetailFragment.newInstance(query1)
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment, newFragment)
@@ -43,7 +51,7 @@ class TabbedActivity : AppCompatActivity() {
         navView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener(function = fun(item: MenuItem): Boolean {
             when (item.itemId) {
                 R.id.navigation_food -> {
-                    val newFragment = ProductDetailFragment.newInstance(resources.getString(R.string.query_group1))
+                    val newFragment = ProductDetailFragment.newInstance(query1)
                     supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.nav_host_fragment, newFragment)
@@ -52,7 +60,7 @@ class TabbedActivity : AppCompatActivity() {
                 }
 
                 R.id.navigation_drinks -> {
-                    val newFragment = ProductDetailFragment.newInstance(resources.getString(R.string.query_group2))
+                    val newFragment = ProductDetailFragment.newInstance(query2)
                     supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.nav_host_fragment, newFragment)

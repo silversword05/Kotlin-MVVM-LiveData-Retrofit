@@ -13,7 +13,7 @@ class MainViewModel:  ViewModel(), KoinComponent {
     private var groupTwoSearchStrings: MutableLiveData<HashMap<Int, String>>? = MutableLiveData()
 
     companion object {
-        const val QUERY_MAX_LENGTH = 20
+        const val QUERY_MAX_LENGTH = 10
     }
 
     init {
