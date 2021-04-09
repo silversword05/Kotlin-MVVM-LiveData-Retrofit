@@ -22,13 +22,13 @@ class ProductViewModel(private val dataRepository: DataRepository) : ViewModel()
         Log.v(ProductViewModel::class.qualifiedName, "Get Product in ProductViewModel with query $query")
         dataRepository.getProducts(object : DataRepository.OnProductData {
             override fun onSuccess(data: NewsResponse) {
-                listOfProducts?.value = data
+                listOfProducts?.postValue(data)
                 Log.v(ProductViewModel::class.qualifiedName, "Number of products ${data.totalResults}")
                 Log.v(ProductViewModel::class.qualifiedName, "Success product in ProductViewModel with query $query, list updated")
             }
 
-            override fun onFailure() {
-                Log.v(ProductViewModel::class.qualifiedName, "Failure to get products in Product View Model")
+            override fun onFailure(exception: Exception) {
+                Log.e(ProductViewModel::class.qualifiedName, "Failure to get products in Product View Model", exception)
             }
         }, query)
     }
