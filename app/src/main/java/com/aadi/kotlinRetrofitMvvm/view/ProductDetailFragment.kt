@@ -9,15 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import com.aadi.kotlinRetrofitMvvm.R
+import com.aadi.kotlinRetrofitMvvm.databinding.FragmentProductsBinding
 import com.aadi.kotlinRetrofitMvvm.model.NewsResponse
 import com.aadi.kotlinRetrofitMvvm.viewmodel.ProductViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class ProductDetailFragment : Fragment() {
+class ProductDetailFragment : Fragment(R.layout.fragment_products) {
 
     lateinit var query: String
     private val productListModel: ProductViewModel by viewModel()
+    private lateinit var binding: FragmentProductsBinding
 
     companion object {
         private const val KEY_STRING = "KEY_STRING"
@@ -42,12 +44,10 @@ class ProductDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentProductsBinding.bind(view)
 
-        val progressBar: ProgressBar? = view.findViewById(R.id.progressBar)
-        progressBar?.visibility = View.VISIBLE
-
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView!!.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
+        binding.progressBar.visibility = View.VISIBLE
+        binding.recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
 
         if (this::query.isInitialized) {
 
@@ -61,8 +61,8 @@ class ProductDetailFragment : Fragment() {
                         productDetailAdapter = ProductDetailAdapter(newsResponse)
                     }
                     productDetailAdapter?.notifyDataSetChanged()
-                    recyclerView.adapter = productDetailAdapter
-                    progressBar?.visibility = View.GONE
+                    binding.recyclerView.adapter = productDetailAdapter
+                    binding.progressBar.visibility = View.GONE
                 }
             }))
         }

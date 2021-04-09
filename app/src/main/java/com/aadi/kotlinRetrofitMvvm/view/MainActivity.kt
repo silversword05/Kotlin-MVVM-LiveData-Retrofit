@@ -7,40 +7,35 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.ViewCompat.generateViewId
-import androidx.core.widget.addTextChangedListener
 import com.aadi.kotlinRetrofitMvvm.R
+import com.aadi.kotlinRetrofitMvvm.databinding.ActivityMainBinding
 import com.aadi.kotlinRetrofitMvvm.viewmodel.MainViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
 import java.lang.StringBuilder
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var linearLayout: LinearLayout
-    private lateinit var queryGroupSwitch : SwitchCompat
-    private lateinit var queryGroupText: TextView
     private lateinit var editTextList: HashMap<Int, HashMap<Int, RelativeLayout>?>
     private val mainViewModel: MainViewModel = MainViewModel()
+
+    private lateinit var activityMainBinding: ActivityMainBinding
 
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        activityMainBinding = ActivityMainBinding.inflate(this.layoutInflater)
+        setContentView(activityMainBinding.root)
         supportActionBar?.hide()
 
-        queryGroupSwitch = findViewById(R.id.query_group_switch)
-        queryGroupText = findViewById(R.id.query_group_text)
-        val queryAddButton: Button = findViewById(R.id.query_add_button)
-        linearLayout = findViewById(R.id.linear_layout_main)
         editTextList = HashMap(2)
         editTextList[0] = HashMap(3)
         editTextList[1] = HashMap(3)
 
-        queryGroupSwitch.setOnCheckedChangeListener { _, isChecked ->
+        activityMainBinding.queryGroupSwitch.setOnCheckedChangeListener { _, isChecked ->
             run {
                 Log.v(MainActivity::class.qualifiedName, "Switch state changed $isChecked")
                 mainViewModel.setQueryGroupState(isChecked)
@@ -62,8 +57,8 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.getQueryGroupState().observe(this, { queryGroupState: Boolean ->
             run {
                 Log.v(MainActivity::class.qualifiedName, "Query Group State Observer $queryGroupState")
-                if(queryGroupState) queryGroupText.text = resources.getString(R.string.query_group1)
-                else queryGroupText.text = resources.getString(R.string.query_group2)
+                if(queryGroupState) activityMainBinding.queryGroupText.text = resources.getString(R.string.query_group1)
+                else activityMainBinding.queryGroupText.text = resources.getString(R.string.query_group2)
 
                 val currentHashMap: HashMap<Int, RelativeLayout> = when (queryGroupState) {
                     true -> editTextList[0] as HashMap<Int, RelativeLayout>
@@ -71,22 +66,22 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 Log.v(MainActivity::class.qualifiedName, "Removing all views")
-                linearLayout.removeAllViews()
-                for((_: Int, value: RelativeLayout) in currentHashMap) linearLayout.addView(value)
+                activityMainBinding.linearLayoutMain.removeAllViews()
+                for((_: Int, value: RelativeLayout) in currentHashMap) activityMainBinding.linearLayoutMain.addView(value)
             }
         })
 
-        queryAddButton.setOnClickListener {
+        activityMainBinding.queryAddButton.setOnClickListener {
             run {
-                Log.v(MainActivity::class.qualifiedName, "New Query Edit Text field add request ${queryGroupText.text}")
-                val currentHashMap: HashMap<Int, RelativeLayout> = when (queryGroupSwitch.isChecked) {
+                Log.v(MainActivity::class.qualifiedName, "New Query Edit Text field add request ${activityMainBinding.queryGroupText.text}")
+                val currentHashMap: HashMap<Int, RelativeLayout> = when (activityMainBinding.queryGroupSwitch.isChecked) {
                     true -> editTextList[0] as HashMap<Int, RelativeLayout>
                     false -> editTextList[1] as HashMap<Int, RelativeLayout>
                 }
                 if(currentHashMap.size < 3) {
 
                     val queryEntryView: RelativeLayout = layoutInflater.inflate(R.layout.query_entry, null, false) as RelativeLayout
-                    linearLayout.addView(queryEntryView)
+                    activityMainBinding.linearLayoutMain.addView(queryEntryView)
                     queryEntryView.id = generateViewId()
                     currentHashMap[queryEntryView.id] = queryEntryView
                     Log.v(MainActivity::class.qualifiedName, "New Query Edit Text field add request ${queryEntryView.id} ")
@@ -99,7 +94,7 @@ class MainActivity : AppCompatActivity() {
 
                         override fun afterTextChanged(s: Editable?) {
                             Log.v(MainActivity::class.qualifiedName, "Text changed of Edit Text field ${queryEntryView.id}")
-                            if (queryGroupSwitch.isChecked) s?.toString()?.let { it1 -> mainViewModel.addSearchStringGroupOne(it1, queryEntryView.id) }
+                            if (activityMainBinding.queryGroupSwitch.isChecked) s?.toString()?.let { it1 -> mainViewModel.addSearchStringGroupOne(it1, queryEntryView.id) }
                             else s?.toString()?.let { it1 -> mainViewModel.addSearchStringGroupTwo(it1, queryEntryView.id) }
                         }
 
@@ -110,10 +105,10 @@ class MainActivity : AppCompatActivity() {
                         run {
                             val parentView: View = view.parent as View
                             Log.v(MainActivity::class.qualifiedName, "Remove Query Edit Text field add request ${parentView.id} ")
-                            if (queryGroupSwitch.isChecked)  mainViewModel.removeSearchStringKeyOne(parentView.id)
+                            if (activityMainBinding.queryGroupSwitch.isChecked)  mainViewModel.removeSearchStringKeyOne(parentView.id)
                             else mainViewModel.removeSearchStringKeyTwo(parentView.id)
                             currentHashMap.remove(parentView.id)
-                            linearLayout.removeView(parentView)
+                            activityMainBinding.linearLayoutMain.removeView(parentView)
                         }
                     }
                 }
@@ -158,7 +153,7 @@ class MainActivity : AppCompatActivity() {
         Log.v(MainActivity::class.qualifiedName, "Resetting parameters ")
         mainViewModel.emptySearchStringGroupOne()
         mainViewModel.emptySearchStringGroupTwo()
-        linearLayout.removeAllViews()
+        activityMainBinding.linearLayoutMain.removeAllViews()
 
         Log.v(MainActivity::class.qualifiedName, "Size of Edit Text List zero ${editTextList[0]?.size}")
         editTextList[0]?.clear()
@@ -166,6 +161,6 @@ class MainActivity : AppCompatActivity() {
         Log.v(MainActivity::class.qualifiedName, "Size of Edit Text List one ${editTextList[1]?.size}")
         editTextList[1]?.clear()
 
-        queryGroupSwitch.isChecked = false
+        activityMainBinding.queryGroupSwitch.isChecked = false
     }
 }
