@@ -22,8 +22,8 @@ class TabbedActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tabbed)
         supportActionBar?.hide()
 
-        val query1: String = intent.getStringExtra(resources.getString(R.string.query_group1))
-        val query2: String = intent.getStringExtra(resources.getString(R.string.query_group2))
+        val query1: String = intent.getStringExtra(resources.getString(R.string.query_group1)) ?: ""
+        val query2: String = intent.getStringExtra(resources.getString(R.string.query_group2)) ?: ""
 
         API_KEY = getString(R.string.news_api_id)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)

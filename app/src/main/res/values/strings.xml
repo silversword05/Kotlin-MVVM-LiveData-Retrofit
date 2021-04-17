@@ -9,4 +9,7 @@
     <string name="query_to_search">Query to search</string>
     <string name="remove">Remove</string>
     <string name="search_both_queries">Search Both Queries</string>
+    <string name="enter_your_email_id">Enter your email ID</string>
+    <string name="enter_the_password">Enter the password</string>
+    <string name="submit">Submit</string>
 </resources>

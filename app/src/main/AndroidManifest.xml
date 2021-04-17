@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--suppress CheckTagEmptyBody -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         package="com.aadi.kotlinRetrofitMvvm">
@@ -15,18 +15,16 @@
             android:usesCleartextTraffic="true"
             tools:ignore="AllowBackup"
             tools:targetApi="m">
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.MainActivity"></activity>
         <activity
                 android:name=".view.TabbedActivity"
-                android:label="@string/title_activity_tabbed">
-
-        </activity>
+                android:label="@string/title_activity_tabbed"></activity>
     </application>
 
 </manifest>
