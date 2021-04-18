@@ -20,6 +20,5 @@ class MainApplication : Application() {
     override fun onTerminate() {
         super.onTerminate()
         Log.v(MainApplication::class.qualifiedName, "Terminating application")
-        Firebase.auth.signOut()
     }
 }
