@@ -13,14 +13,11 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.aadi.kotlinRetrofitMvvm.R
 import com.aadi.kotlinRetrofitMvvm.SharedPreferenceUtil
+import com.aadi.kotlinRetrofitMvvm.model.LocationData
 import com.aadi.kotlinRetrofitMvvm.toText
 import com.aadi.kotlinRetrofitMvvm.view.LoginActivity
-import com.aadi.kotlinRetrofitMvvm.view.MainActivity
 import com.aadi.kotlinRetrofitMvvm.viewmodel.MapViewModel
-import com.firebase.geofire.GeoFire
-import com.firebase.geofire.GeoLocation
 import com.google.android.gms.location.*
-import com.google.firebase.database.DatabaseError
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -64,15 +61,13 @@ class ForegroundOnlyLocationService : Service() {
                 currentLocation.run {
                     Log.v(LocationUpdatesBroadcastReceiver::class.qualifiedName, "Location received ${this?.latitude} ${this?.longitude} ${this?.time}")
                     Log.v(LocationUpdatesBroadcastReceiver::class.qualifiedName, "Foreground state $serviceRunningInForeground")
-                    val geoFire: GeoFire = MapViewModel.getGeoFireInstance()
                     if(this?.latitude != null) {
-                        geoFire.setLocation(this.time.toString(), GeoLocation(this.latitude, this.longitude)) { key: String?, error: DatabaseError? ->
-                            error?.let { throwable ->
-                                Log.e(LocationUpdatesBroadcastReceiver::class.qualifiedName, "Location update failed in database", throwable.toException())
-                            } ?: run {
-                                Log.d(LocationUpdatesBroadcastReceiver::class.qualifiedName, "Location updated successfully $key")
+                        MapViewModel.userReference?.child(this.time.toString())?.setValue(LocationData(latitude = this.latitude, longitude = this.longitude, time = this.time))
+                            ?.addOnSuccessListener {
+                                Log.d(LocationUpdatesBroadcastReceiver::class.qualifiedName, "Location updated successfully ${this.time}")
+                            }?.addOnFailureListener { exception ->
+                                Log.e(LocationUpdatesBroadcastReceiver::class.qualifiedName, "Location update failed in database", exception)
                             }
-                        }
                     }
                 }
 

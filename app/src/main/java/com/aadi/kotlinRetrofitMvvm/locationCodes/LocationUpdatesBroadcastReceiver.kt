@@ -20,12 +20,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.aadi.kotlinRetrofitMvvm.model.LocationData
 import com.aadi.kotlinRetrofitMvvm.viewmodel.MapViewModel
-import com.firebase.geofire.GeoFire
-import com.firebase.geofire.GeoLocation
 import com.google.android.gms.location.LocationAvailability
 import com.google.android.gms.location.LocationResult
-import com.google.firebase.database.DatabaseError
 import java.util.*
 
 /**
@@ -49,15 +47,13 @@ class LocationUpdatesBroadcastReceiver : BroadcastReceiver() {
                 Log.v(LocationUpdatesBroadcastReceiver::class.qualifiedName, "Location received ${location.latitude} ${location.longitude} at ${Date(location.time)}")
                 Log.v(LocationUpdatesBroadcastReceiver::class.qualifiedName, "Foreground state ${isAppInForeground(context)}")
 
-                val geoFire: GeoFire = MapViewModel.getGeoFireInstance()
-                geoFire.setLocation(location.time.toString(), GeoLocation(location.latitude, location.longitude)) { key: String?, error: DatabaseError? ->
-                    error?.let { throwable ->
-                        Log.e(LocationUpdatesBroadcastReceiver::class.qualifiedName, "Location update failed in database", throwable.toException())
-                    } ?: run {
-                        Log.d(LocationUpdatesBroadcastReceiver::class.qualifiedName, "Location updated successfully $key")
+                MapViewModel.userReference?.child(location.time.toString())
+                    ?.setValue(LocationData(latitude = location.latitude, longitude = location.longitude, time = location.time))
+                    ?.addOnSuccessListener {
+                        Log.d(LocationUpdatesBroadcastReceiver::class.qualifiedName, "Location updated successfully ${location.time}")
+                    }?.addOnFailureListener { exception ->
+                        Log.e(LocationUpdatesBroadcastReceiver::class.qualifiedName, "Location update failed in database", exception)
                     }
-
-                }
             }
         }
     }
@@ -74,7 +70,8 @@ class LocationUpdatesBroadcastReceiver : BroadcastReceiver() {
         appProcesses.forEach { appProcess ->
             if (appProcess.importance ==
                 ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND &&
-                appProcess.processName == context.packageName) {
+                appProcess.processName == context.packageName
+            ) {
                 return true
             }
         }

@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.aadi.kotlinRetrofitMvvm.R
+import com.aadi.kotlinRetrofitMvvm.databinding.ActivityTabbedBinding
 
 class TabbedActivity : AppCompatActivity() {
 
@@ -17,18 +18,22 @@ class TabbedActivity : AppCompatActivity() {
         lateinit var API_KEY: String
     }
 
+    private lateinit var activityTabbedBinding: ActivityTabbedBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tabbed)
+
+        activityTabbedBinding = ActivityTabbedBinding.inflate(this.layoutInflater)
+        setContentView(activityTabbedBinding.root)
         supportActionBar?.hide()
 
         val query1: String = intent.getStringExtra(resources.getString(R.string.query_group1)) ?: ""
         val query2: String = intent.getStringExtra(resources.getString(R.string.query_group2)) ?: ""
 
         API_KEY = getString(R.string.news_api_id)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        val navView: BottomNavigationView = activityTabbedBinding.navView
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(activityTabbedBinding.navHostFragment.id) as NavHostFragment
         val navController = navHostFragment.navController
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -44,7 +49,7 @@ class TabbedActivity : AppCompatActivity() {
             val newFragment = ProductDetailFragment.newInstance(query1)
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.nav_host_fragment, newFragment)
+                .replace(activityTabbedBinding.navHostFragment.id, newFragment)
                 .commit()
         }
 
@@ -54,7 +59,7 @@ class TabbedActivity : AppCompatActivity() {
                     val newFragment = ProductDetailFragment.newInstance(query1)
                     supportFragmentManager
                         .beginTransaction()
-                        .replace(R.id.nav_host_fragment, newFragment)
+                        .replace(activityTabbedBinding.navHostFragment.id, newFragment)
                         .commit()
                     return@OnNavigationItemSelectedListener true
                 }
@@ -63,7 +68,7 @@ class TabbedActivity : AppCompatActivity() {
                     val newFragment = ProductDetailFragment.newInstance(query2)
                     supportFragmentManager
                         .beginTransaction()
-                        .replace(R.id.nav_host_fragment, newFragment)
+                        .replace(activityTabbedBinding.navHostFragment.id, newFragment)
                         .commit()
                     return@OnNavigationItemSelectedListener true
                 }

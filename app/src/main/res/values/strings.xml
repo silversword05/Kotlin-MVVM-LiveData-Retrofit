@@ -32,4 +32,6 @@
     <string name="launch_activity">Launch activity</string>
     <string name="location_unknown">Location Unknown</string>
     <string name="location_updates_label">Location Updates</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="select_a_marker_to_see_time">Select a marker to see time</string>
 </resources>

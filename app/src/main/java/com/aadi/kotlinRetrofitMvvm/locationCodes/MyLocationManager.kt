@@ -88,7 +88,6 @@ class MyLocationManager private constructor(private val context: Context) {
         @Volatile private var INSTANCE: MyLocationManager? = null
 
         fun getInstance(context: Context): MyLocationManager {
-            MapViewModel.initializeGeoFire()
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: MyLocationManager(context).also { INSTANCE = it }
             }
