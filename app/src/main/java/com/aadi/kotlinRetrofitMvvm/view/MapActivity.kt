@@ -120,7 +120,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         when (LOCATION_EXTRACTOR_TYPE) {
             LocationExtractorType.BROADCAST_LOCATION_BACKGROUND ->
-                mapViewModel.receivingLocationUpdates.observe(this, { locationReceiveState ->
+                mapViewModel.receivingLocationUpdates.observe(this, { locationReceiveState: Boolean ->
                     if (locationReceiveState) activityMapBinding.locationStatusView.text = getString(R.string.receiving_locations_text)
                     else activityMapBinding.locationStatusView.text = getString(R.string.not_receiving_locations_state)
                 })
